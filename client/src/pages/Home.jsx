@@ -12,12 +12,13 @@ const Home = () => {
 
   return (
     <section className='w-full min-h-screen'>
-      <h1 className='font-nunito text-7xl text-center text-white font-extrabold pt-5'>SAMPLE FULLSTACK PROJECT</h1>
-      <div className='w-3/5 flex flex-wrap  justify-center gap-10 m-auto'>    
+      <h1 className='font-nunito xl:text-7xl md:text-4xl lg:text-6xl text-2xl text-center text-white font-extrabold pt-5'>SKITTLES</h1>
+      <hr />
+      <div className='lg:w-3/5 w-full flex flex-wrap  justify-center gap-10 m-auto'>    
           {users.map(u => (
-            <div className='w-[80%] border flex items-center justify-start text-left' key={u.id}>
-                <h3 className='font-noto text-xl text-white mb-2 ml-6 mr-auto'>{u.name}</h3>
-                <p className='font-nunito text-sm mr-8 text-white hover:text-lime-400'>{u.email}</p>
+            <div className='lg:w-[80%] w-full flex items-center justify-start text-left max-sm:flex-col max-md:m-auto' key={u.id}>
+                <h3 className='font-noto lg:text-xl text-md text-white mb-2 ml-6 mr-auto max-md:text-center font-bold'>{u.name}</h3>
+                <p className='font-nunito text-sm max-md:hidden mr-8 text-white hover:text-lime-400'>{u.email}</p>
             </div>
           ))}
       </div>

@@ -24,7 +24,11 @@ const Signup = () => {
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(values)
       })
-      .then(() => navigate('/login'))
+      .then((r) => {
+        if (r.status === 201){
+          navigate('/login')
+        }
+        })
     }
   })
 

@@ -17,7 +17,18 @@ const Login = () => {
       email: ''
     }, 
     validationSchema: formSchema,
-    onSubmit: () => navigate('/')
+    onSubmit: (values) => {
+      fetch('http://localhost:5555/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(values)
+      })
+      .then((r) => {
+        if (r.status === 200){
+          navigate('/')
+        }
+        })
+      }
   })
 
   const inputFields = [

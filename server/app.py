@@ -11,7 +11,7 @@ CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 0
-secret_key = b'\xff\x90\x07\x04g6\xfc\xfb\x9b\xba{3\xd6\xfc\xbd\x04'
+app.secret_key = b'\xff\x90\x07\x04g6\xfc\xfb\x9b\xba{3\xd6\xfc\xbd\x04'
 
 api = Api(app)
 migrate = Migrate(app, db)
@@ -51,10 +51,11 @@ class UserResource(Resource):
         if not user:
             return {'error': 'User not found.'}, 404
         data = request.json
-        for attr in request.form():
-            setattr(user, attr, request.form['attr'])
+        for attr, value in data.items():  # Iterate over JSON data items
+            setattr(user, attr, value)     # Set attribute value using setattr
         db.session.commit()
-        return {'success': 'Customer updated successfully.'}, 200
+        return {'success': 'User updated successfully.'}, 200
+
     
     def delete(self, id):
         user = User.query.get(id)
@@ -65,6 +66,25 @@ class UserResource(Resource):
         return {}, 204
     
 api.add_resource(UserResource, '/users', '/users/<int:id>')
+
+class Login(Resource):
+ def post(self):
+        user = User.query.filter(User.email == request.get_json()['email']).first()
+
+        session['user_id'] = user.id
+        return make_response(jsonify(user.to_dict()))
+        
+api.add_resource(Login, '/login')  
+
+class CheckSession(Resource):
+    def get(self):
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            return user.to_dict()
+        else:
+            return {}, 401
+            
+api.add_resource(CheckSession, '/check_session')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=1)
