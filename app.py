@@ -9,8 +9,9 @@ app = Flask(__name__)
 
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 0
+app.json.compact = 0
 app.secret_key = b'\xff\x90\x07\x04g6\xfc\xfb\x9b\xba{3\xd6\xfc\xbd\x04'
 
 api = Api(app)
