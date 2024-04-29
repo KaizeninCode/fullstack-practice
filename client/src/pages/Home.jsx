@@ -5,7 +5,7 @@ const Home = () => {
     const [users, setUsers] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5555/users')
+        fetch('http://127.0.0.1:5555/api/users')
         .then(r => r.json())
         .then(data => setUsers(data))
     }, [])
